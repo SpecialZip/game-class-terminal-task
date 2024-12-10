@@ -1137,8 +1137,9 @@ GameObject:
   m_Component:
   - component: {fileID: 926305340}
   - component: {fileID: 926305339}
-  - component: {fileID: 926305341}
   - component: {fileID: 926305342}
+  - component: {fileID: 926305343}
+  - component: {fileID: 926305341}
   m_Layer: 0
   m_Name: Kart
   m_TagString: Untagged
@@ -1182,7 +1183,7 @@ Transform:
   m_GameObject: {fileID: 926305337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.01, y: 1.059, z: -8.58}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1192,6 +1193,7 @@ Transform:
   - {fileID: 936923335}
   - {fileID: 1558361912}
   - {fileID: 396356572}
+  - {fileID: 1325782757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &926305341
@@ -1215,8 +1217,8 @@ MonoBehaviour:
   wheelMesh:
   - {fileID: 789454500}
   - {fileID: 848093183}
-  torque: 200
-  steeringMax: 20
+  torque: 300
+  steeringMax: 45
 --- !u!65 &926305342
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1238,6 +1240,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.95, y: 1.09, z: 2.94}
   m_Center: {x: 3.02, y: 0.82, z: 2.28}
+--- !u!114 &926305343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926305337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050e779298f06ce4082c8c9b5c57a698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal: 0.5
+  vertical: 0.2
+  brake: 1
 --- !u!1 &936923334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,7 +1349,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1408,27 +1424,122 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 5.97, y: 1, z: -5.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
+--- !u!1 &1325782756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1325782757}
+  - component: {fileID: 1325782760}
+  - component: {fileID: 1325782759}
+  - component: {fileID: 1325782758}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1325782757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325782756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.17407782, y: 0, z: 0, w: 0.9847319}
+  m_LocalPosition: {x: 3.09, y: 2.89, z: -3.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 926305340}
+  m_LocalEulerAnglesHint: {x: 20.05, y: 0, z: 0}
+--- !u!114 &1325782758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
+  m_GameObject: {fileID: 1325782756}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aac6cb8a78bfde6479dfdbd181b7d484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 926305340}
-  offset: {x: 5, y: 2.2, z: 0}
-  smoothSpeed: 0.125
+  Player: {fileID: 1614659410}
+  Camera: {fileID: 1325782756}
+  followOffset: {x: 3.5, y: 1, z: 0}
+  cameraOffset: {x: 1, y: 0, z: 0}
+  speed: 1
+--- !u!81 &1325782759
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325782756}
+  m_Enabled: 1
+--- !u!20 &1325782760
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325782756}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &1512385350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1671,7 @@ GameObject:
   - component: {fileID: 1614659412}
   m_Layer: 0
   m_Name: Cylinder001
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    private InputManager inputManager;
+    
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
 
-    public float torque = 200;
+    public float torque = 300;
 
     public float steeringMax = 40;
     // Start is called before the first frame update
     void Start()
     {
-        
+        inputManager = GetComponent<InputManager>();
     }
 
     // Update is called once per frame
@@ -38,30 +40,19 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         animateWheels();
-        if (Input.GetAxis("Vertical")!=0)
-        {
-            foreach (WheelCollider wheel in backWheels)
-            {
-                wheel.motorTorque = Input.GetAxis("Vertical")*torque;
-            }
+        moveVehicle();
+    }
+
+    private void moveVehicle()
+    {
+        foreach (WheelCollider wheel in backWheels)
+        { 
+            wheel.motorTorque = inputManager.vertical*torque;
         }
-        else
-        {
-            foreach (WheelCollider wheel in backWheels)
-            {
-                wheel.motorTorque = 0;
-            }
-        }
-
-
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            foreach (WheelCollider wheel in frontWheels)
-            {
-                wheel.steerAngle = Input.GetAxis("Horizontal") * steeringMax;
-            }
-
-            
+        
+        foreach (WheelCollider wheel in frontWheels)
+        { 
+            wheel.steerAngle = inputManager.horizontal* steeringMax;
         }
     }
 
