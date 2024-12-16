@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
 {
     public float horizontal;
     public float vertical;
-    public bool brake=false;
+    public float brake;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +24,6 @@ public class InputManager : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
-        brake = (Input.GetAxis("Brake")!=0?true:false);
+        brake = Input.GetAxis("Brake");
     }
 }

@@ -11,8 +11,8 @@ public class CarController : MonoBehaviour
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
 
-    public float torque = 300;
-
+    public float torque = 200;
+    public float brakeTorqueMax = 500;
     public float steeringMax = 40;
     // Start is called before the first frame update
     void Start()
@@ -45,9 +45,11 @@ public class CarController : MonoBehaviour
 
     private void moveVehicle()
     {
+        float brake = Mathf.Clamp(inputManager.brake,0,1)*brakeTorqueMax;
         foreach (WheelCollider wheel in backWheels)
         { 
             wheel.motorTorque = inputManager.vertical*torque;
+            wheel.brakeTorque = brake;
         }
         
         foreach (WheelCollider wheel in frontWheels)
@@ -66,7 +68,7 @@ public class CarController : MonoBehaviour
 
         for (int i = 0; i < frontWheels.Length; i++)
         {
-            frontWheels[i].transform.localRotation = Quaternion.Euler(0, steerAngle, 0);
+            //frontWheels[i].transform.localRotation = Quaternion.Euler(0, steerAngle, 0);
         }
         // leftFrontWheel.localRotation = Quaternion.Slerp(leftFrontWheel.localRotation, Quaternion.Euler(0, leftWheelAngle, 0), Time.deltaTime * steerSpeed);
         // rightFrontWheel.localRotation = Quaternion.Slerp(rightFrontWheel.localRotation, Quaternion.Euler(0, rightWheelAngle, 0), Time.deltaTime * steerSpeed);
