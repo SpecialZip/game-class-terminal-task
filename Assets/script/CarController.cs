@@ -11,12 +11,18 @@ public class CarController : MonoBehaviour
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
-    
     public Rigidbody rb;
     public TextMeshProUGUI speedText;       //车速
+    
+    //速度模块
     public float torque = 200;
     public float brakeTorqueMax = 500;
     public float steeringMax = 40;
+    
+    //道具模块
+    public GameObject[] propSlots = new GameObject[2];
+    private int currentSlotIndex = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -75,4 +81,32 @@ public class CarController : MonoBehaviour
         //     wheelMesh[i].transform.rotation = wheelRotation;
         // }
     }
+    
+    
+    //碰撞道具
+    // private void OnTriggerEnter(Collision other)
+    // {
+    //     Debug.Log("ceshi");
+    //     if (other.gameObject.CompareTag("Prop"))
+    //     {
+    //         Vector3 position =other.gameObject.transform.position;
+    //         Quaternion quaternion = other.gameObject.GetComponent<Quaternion>();
+    //         Destroy(other.gameObject);
+    //         Debug.Log("销毁了");
+    //         GameObject.Find("Props").GetComponent<PropScriptRespawn>().Respawn(position, quaternion);
+    //         // if (currentSlotIndex < propSlots.Length)
+    //         // {
+    //         //     // 还有可用的道具槽
+    //         //     propSlots[currentSlotIndex] = collision.gameObject;
+    //         //     // 可以在这里进行一些额外操作，比如让道具在视觉上消失（隐藏道具游戏对象）
+    //         //     collision.gameObject.SetActive(false);
+    //         //     currentSlotIndex++;
+    //         //     Debug.Log("成功获取道具，放入道具槽 " + currentSlotIndex);
+    //         // }
+    //         // else
+    //         // {
+    //         //     Debug.Log("道具槽已满，无法获取更多道具");
+    //         // }
+    //     }
+    // }
 }
