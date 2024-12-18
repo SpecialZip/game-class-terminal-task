@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timeText;        //进行时间
@@ -75,11 +77,15 @@ public class Timer : MonoBehaviour
                 recordBestTime=recordTime;
                 recordBestTimeText.text = FormatTime(recordBestTime);
             }
+            
+            //进入结算画面
+            StartCoroutine(Ending());
         }
 
         yield return new WaitForSeconds(5f);
         
         carPassing = false;
+
         
     }
     
@@ -102,5 +108,11 @@ public class Timer : MonoBehaviour
     {
         currentLap=currentLap>totalLaps?totalLaps:currentLap;
         return string.Format("{0}/{1}", currentLap,totalLaps);
+    }
+
+    public IEnumerator Ending()
+    {
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene("End");
     }
 }
