@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CarController : MonoBehaviour
 {
     private InputManager inputManager;
-    
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
-
+    
+    public Rigidbody rb;
+    public TextMeshProUGUI speedText;       //车速
     public float torque = 200;
     public float brakeTorqueMax = 500;
     public float steeringMax = 40;
@@ -18,22 +21,14 @@ public class CarController : MonoBehaviour
     void Start()
     {
         inputManager = GetComponent<InputManager>();
+        rb=GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // float horizontal = Input.GetAxis("Horizontal");//左右
-        // float vertical = Input.GetAxis("Vertical");
-        // foreach (WheelCollider wheel in frontWheels)
-        // {
-        //     wheel.steerAngle = horizontal * 30;
-        // }
-        //
-        // foreach (WheelCollider wheel in backWheels)
-        // {
-        //     wheel.motorTorque = vertical*torque;
-        // }
+        float speed=rb.velocity.magnitude;
+        speedText.text = Mathf.FloorToInt(speed).ToString();
     }
 
 
