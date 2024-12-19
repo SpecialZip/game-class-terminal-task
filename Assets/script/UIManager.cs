@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject startPoint;           //起点
     private Ray startPointRay;              //起点射线
     private bool carPassing = false;        //经过起点
+    private int propNum = 0;                //道具数量
     void Start()
     {
         // 获取场景中的Text组件
@@ -98,23 +99,31 @@ public class UIManager : MonoBehaviour
     //更新道具栏UI
     public void UpdateProps(List<CarController.Props> propSlot)
     {
-        GameObject firstProp = props[0].transform.Find("SpeedUp").gameObject;
-        GameObject secondProp = props[1].transform.Find("SpeedUp").gameObject;
-        if (propSlot.Count == 0)
+        int propRealNum = propSlot.Count;
+        
+        
+        if (propRealNum== 0)
         {
-            if(!firstProp) Destroy(firstProp);
-            if(!secondProp) Destroy(secondProp);
+            GameObject firstProp = props[0].transform.Find("SpeedUp(Clone)").gameObject;
+            Destroy(firstProp);
         }
         else if (propSlot.Count == 1)
         {
-            if (firstProp) Instantiate(speedUpUI, props[0].transform);
-            if(!secondProp) Destroy(secondProp);
+            if (propNum < propRealNum)
+            {
+                Instantiate(speedUpUI, props[0].transform);
+            }
+            else
+            {
+                GameObject secondProp = props[1].transform.Find("SpeedUp(Clone)").gameObject;
+                Destroy(secondProp);
+            }
         }
         else if(propSlot.Count == 2)
         {
-            if(firstProp) Instantiate(speedUpUI, props[0].transform);
-            if(secondProp) Instantiate(speedUpUI, props[1].transform);
+            Instantiate(speedUpUI, props[1].transform);
         }
+        propNum = propRealNum;
     }
 
     string FormatTime(float timeInSeconds)
