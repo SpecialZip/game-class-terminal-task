@@ -29,6 +29,6 @@ public class PropScriptRespawn : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
         Instantiate(propPrefab,position, rotation, transform);
-        Debug.Log(position);Debug.Log(rotation);
+        //Debug.Log(position);Debug.Log(rotation);
     }
 }

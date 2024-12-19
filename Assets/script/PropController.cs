@@ -21,8 +21,9 @@ public class PropController : MonoBehaviour
     {
         Vector3 position =gameObject.transform.position;
         Quaternion rotation = other.gameObject.transform.rotation;
-        Debug.Log(position);Debug.Log(rotation);
+        //Debug.Log(position);Debug.Log(rotation);
         GameObject.Find("Props").GetComponent<PropScriptRespawn>().Respawn(position, rotation);
+        GameObject.Find("Kart").GetComponent<CarController>().GetProp();
         Destroy(gameObject);
     }
 }
