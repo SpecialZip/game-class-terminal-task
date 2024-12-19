@@ -1,15 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI timeText;        //进行时间
     public TextMeshProUGUI maxLapTimeText;  //最大圈速
     public TextMeshProUGUI lapsText;        //圈数
     public TextMeshProUGUI recordBestTimeText;//个人最佳成绩
+    public Image[] props;                   //道具
+    public GameObject speedUpUI;            //氮气加速UI图片
 
     private float maxLapTime=Single.PositiveInfinity;               //最大圈速
     private float lapTimeStart;             //圈速记录开始
@@ -21,7 +25,7 @@ public class Timer : MonoBehaviour
     private int totalLaps=2;                //一共几圈
     public GameObject startPoint;           //起点
     private Ray startPointRay;              //起点射线
-    private bool carPassing = false;
+    private bool carPassing = false;        //经过起点
     void Start()
     {
         // 获取场景中的Text组件
@@ -55,6 +59,7 @@ public class Timer : MonoBehaviour
         }
     }
 
+    //更新圈数
     IEnumerator UpdateLaps()
     {
         carPassing = true;
@@ -89,6 +94,28 @@ public class Timer : MonoBehaviour
         
     }
     
+    
+    //更新道具栏UI
+    public void UpdateProps(List<CarController.Props> propSlot)
+    {
+        GameObject firstProp = props[0].transform.Find("SpeedUp").gameObject;
+        GameObject secondProp = props[1].transform.Find("SpeedUp").gameObject;
+        if (propSlot.Count == 0)
+        {
+            if(!firstProp) Destroy(firstProp);
+            if(!secondProp) Destroy(secondProp);
+        }
+        else if (propSlot.Count == 1)
+        {
+            if (firstProp) Instantiate(speedUpUI, props[0].transform);
+            if(!secondProp) Destroy(secondProp);
+        }
+        else if(propSlot.Count == 2)
+        {
+            if(firstProp) Instantiate(speedUpUI, props[0].transform);
+            if(secondProp) Instantiate(speedUpUI, props[1].transform);
+        }
+    }
 
     string FormatTime(float timeInSeconds)
     {
@@ -110,6 +137,7 @@ public class Timer : MonoBehaviour
         return string.Format("{0}/{1}", currentLap,totalLaps);
     }
 
+    //进入End场景
     public IEnumerator Ending()
     {
         yield return new WaitForSeconds(10f);
