@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public PlayerData playerData;           //存储数据
     public TextMeshProUGUI timeText;        //进行时间
     public TextMeshProUGUI maxLapTimeText;  //最大圈速
     public TextMeshProUGUI lapsText;        //圈数
@@ -84,6 +85,8 @@ public class UIManager : MonoBehaviour
                 recordBestTimeText.text = FormatTime(recordBestTime);
             }
             
+            //记录个人数据
+            playerData.recordTime=recordTime;
             //进入结算画面
             StartCoroutine(Ending());
         }
