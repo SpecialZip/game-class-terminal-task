@@ -129,7 +129,7 @@ public class UIManager : MonoBehaviour
         propNum = propRealNum;
     }
 
-    string FormatTime(float timeInSeconds)
+    public string FormatTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
         int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
@@ -143,7 +143,7 @@ public class UIManager : MonoBehaviour
         return string.Format("{0}'{1}''{2}", minutesStr, secondsStr, millisecondsStr);
     }
 
-    string FormatLaps(int currentLap,int totalLaps)
+    public string FormatLaps(int currentLap,int totalLaps)
     {
         currentLap=currentLap>totalLaps?totalLaps:currentLap;
         return string.Format("{0}/{1}", currentLap,totalLaps);

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PropController : MonoBehaviour
 {
+    public Vector3 rotationSpeed = new Vector3(0, 1, 0); // 定义旋转速度
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class PropController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(rotationSpeed);
     }
     
     private void OnTriggerEnter(Collider other)
