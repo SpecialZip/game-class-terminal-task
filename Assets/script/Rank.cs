@@ -31,6 +31,10 @@ public class Rank : MonoBehaviour
     public void SortGrades()
     {
         playerDatas.Sort((a,b)=>a.recordTime.CompareTo(b.recordTime));
+        for (int i = 0; i < playerDatas.Count; i++)
+        {
+            playerDatas[i].rank = i + 1;
+        }
     }
 
     public void ShowRank()

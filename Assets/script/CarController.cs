@@ -7,14 +7,14 @@ using UnityEngine.UIElements;
 
 public class CarController : MonoBehaviour
 {
-    private InputManager inputManager;
-    private UIManager uiManager;
+    private InputManager inputManager;//输入
+    private UIManager uiManager;//UI
+    private AudioSource audioSource;//音频
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
     public Rigidbody rb;
     public TextMeshProUGUI speedText;       //车速
-    
     //速度模块
     public float torque = 200;
     public float brakeTorqueMax = 500;
@@ -42,14 +42,31 @@ public class CarController : MonoBehaviour
     {
         inputManager = GetComponent<InputManager>();
         uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
+        audioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //UI时速更新
         float speed=rb.velocity.magnitude;
         speedText.text = Mathf.FloorToInt(speed).ToString();
+        //音频播放
+        if (inputManager.brake > 0)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
     }
 
 
