@@ -93,35 +93,35 @@ public class CarController : MonoBehaviour
 
     private void MoveVehicle(int acceleration = 1)
     {
-        if (speedUpStatus && inputManager.brake>0)
-        {
-            foreach (WheelCollider wheel in backWheels)
-            {
-                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
-                curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
-                wheel.sidewaysFriction = curve;
-            }
-            foreach (WheelCollider wheel in frontWheels)
-            { 
-                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
-                curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
-                wheel.sidewaysFriction = curve;
-            }
-        }
-        else{
-            foreach (WheelCollider wheel in backWheels)
-            {
-                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
-                curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
-                wheel.sidewaysFriction = curve;
-            }
-            foreach (WheelCollider wheel in frontWheels)
-            { 
-                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
-                curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
-                wheel.sidewaysFriction = curve; 
-            }
-        }
+        // if (speedUpStatus && inputManager.brake>0)
+        // {
+        //     foreach (WheelCollider wheel in backWheels)
+        //     {
+        //         WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+        //         curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
+        //         wheel.sidewaysFriction = curve;
+        //     }
+        //     foreach (WheelCollider wheel in frontWheels)
+        //     { 
+        //         WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+        //         curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
+        //         wheel.sidewaysFriction = curve;
+        //     }
+        // }
+        // else{
+        //     foreach (WheelCollider wheel in backWheels)
+        //     {
+        //         WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+        //         curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
+        //         wheel.sidewaysFriction = curve;
+        //     }
+        //     foreach (WheelCollider wheel in frontWheels)
+        //     { 
+        //         WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+        //         curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
+        //         wheel.sidewaysFriction = curve; 
+        //     }
+        // }
         float brake = Mathf.Clamp(inputManager.brake,0,1)*brakeTorqueMax;
         foreach (WheelCollider wheel in backWheels)
         { 

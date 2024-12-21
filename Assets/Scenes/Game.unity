@@ -1489,7 +1489,7 @@ PrefabInstance:
       objectReference: {fileID: 1684475538}
     - target: {fileID: 119346314161541248, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: brakeTorqueMax
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 3010127394018237715, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_Size.y
@@ -1521,15 +1521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6280482484071577912, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.16
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6280482484071577912, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.16
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6280482484071577912, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.16
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6280482484071577912, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1577,7 +1577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426391205389776102, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_Mass
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7318541993769744945, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_Name

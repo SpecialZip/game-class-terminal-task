@@ -22,8 +22,16 @@ public class StartScene : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void toStart(){
+        SceneManager.LoadScene("Start");    
+    }
+    
+    public void toIntroduction(){
+        SceneManager.LoadScene("Introduction");
+    }
+    
     public void toRank()
     {
-        SceneManager.LoadScene("Ranking");
+        SceneManager.LoadScene("Rank");
     }
 }
