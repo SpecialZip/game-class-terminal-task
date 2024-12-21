@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 10s后重新生成道具
+/// </summary>
 public class PropScriptRespawn : MonoBehaviour
 { 
     public GameObject propPrefab; // 道具预制体

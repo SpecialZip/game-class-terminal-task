@@ -10,6 +10,7 @@ public class CarController : MonoBehaviour
     private InputManager inputManager;//输入
     private UIManager uiManager;//UI
     private AudioSource audioSource;//音频
+    
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
@@ -17,7 +18,7 @@ public class CarController : MonoBehaviour
     public TextMeshProUGUI speedText;       //车速
     //速度模块
     public float torque = 200;
-    public float brakeTorqueMax = 500;
+    public float brakeTorqueMax = 100;
     public float steeringMax = 40;
     public bool speedUpStatus = false;//加速状态。
     //道具模块
@@ -41,9 +42,9 @@ public class CarController : MonoBehaviour
     void Start()
     {
         inputManager = GetComponent<InputManager>();
-        uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
         audioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody>();
+        uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -52,6 +53,7 @@ public class CarController : MonoBehaviour
         //UI时速更新
         float speed=rb.velocity.magnitude;
         speedText.text = Mathf.FloorToInt(speed).ToString();
+        
         //音频播放
         if (inputManager.brake > 0)
         {
@@ -75,6 +77,8 @@ public class CarController : MonoBehaviour
         animateWheels();
         if (inputManager.prop > 0 && !speedUpStatus)
         {
+            //加速状态
+            speedUpStatus = true;
             ConsumeProp();
         }
         if (speedUpStatus)
@@ -89,11 +93,41 @@ public class CarController : MonoBehaviour
 
     private void MoveVehicle(int acceleration = 1)
     {
+        if (speedUpStatus && inputManager.brake>0)
+        {
+            foreach (WheelCollider wheel in backWheels)
+            {
+                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+                curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
+                wheel.sidewaysFriction = curve;
+            }
+            foreach (WheelCollider wheel in frontWheels)
+            { 
+                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+                curve.extremumSlip = 0.01f; // 设置新的极值点打滑值
+                wheel.sidewaysFriction = curve;
+            }
+        }
+        else{
+            foreach (WheelCollider wheel in backWheels)
+            {
+                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+                curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
+                wheel.sidewaysFriction = curve;
+            }
+            foreach (WheelCollider wheel in frontWheels)
+            { 
+                WheelFrictionCurve curve = wheel.sidewaysFriction; // 获取侧向摩擦曲线
+                curve.extremumSlip = 0.2f; // 设置新的极值点打滑值
+                wheel.sidewaysFriction = curve; 
+            }
+        }
         float brake = Mathf.Clamp(inputManager.brake,0,1)*brakeTorqueMax;
         foreach (WheelCollider wheel in backWheels)
         { 
             wheel.motorTorque = inputManager.vertical*torque*acceleration;
             wheel.brakeTorque = brake;
+            Debug.Log(wheel.sidewaysFriction.extremumSlip);
         }
         
         foreach (WheelCollider wheel in frontWheels)
@@ -104,15 +138,12 @@ public class CarController : MonoBehaviour
 
     private void animateWheels()
     {
-        Vector3 wheelPositions = Vector3.zero;
-        Quaternion wheelRotation = Quaternion.identity;
-        
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = inputManager.horizontal;
         float steerAngle = horizontalInput * steeringMax;
 
-        for (int i = 0; i < frontWheels.Length; i++)
+        for (int i = 0; i < wheelMesh.Length; i++)
         {
-            //frontWheels[i].transform.localRotation = Quaternion.Euler(0, steerAngle, 0);
+            wheelMesh[i].transform.localRotation = Quaternion.Euler(0, 90+steerAngle, 0);
         }
         // leftFrontWheel.localRotation = Quaternion.Slerp(leftFrontWheel.localRotation, Quaternion.Euler(0, leftWheelAngle, 0), Time.deltaTime * steerSpeed);
         // rightFrontWheel.localRotation = Quaternion.Slerp(rightFrontWheel.localRotation, Quaternion.Euler(0, rightWheelAngle, 0), Time.deltaTime * steerSpeed);

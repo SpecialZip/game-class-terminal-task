@@ -18,13 +18,15 @@ public class PropController : MonoBehaviour
         transform.Rotate(rotationSpeed);
     }
     
+    //物体杯碰撞后消失，10s后重新出现
     private void OnTriggerEnter(Collider other)
     {
         Vector3 position =gameObject.transform.position;
         Quaternion rotation = other.gameObject.transform.rotation;
         //Debug.Log(position);Debug.Log(rotation);
         GameObject.Find("Props").GetComponent<PropScriptRespawn>().Respawn(position, rotation);
-        GameObject.Find("Kart").GetComponent<CarController>().GetProp();
+        GameObject.Find("RabbitCar").GetComponent<CarController>().GetProp();
+        //GameObject.Find("Kart").GetComponent<CarController>().GetProp();
         Destroy(gameObject);
     }
 }
