@@ -75,7 +75,7 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         animateWheels();
-        if (inputManager.prop > 0 && !speedUpStatus)
+        if (inputManager.prop > 0 && !speedUpStatus&& propSlot.Count > 0)
         {
             //加速状态
             speedUpStatus = true;
@@ -83,7 +83,7 @@ public class CarController : MonoBehaviour
         }
         if (speedUpStatus)
         {
-            MoveVehicle(10);
+            MoveVehicle(8);
         }
         else
         {
@@ -124,8 +124,9 @@ public class CarController : MonoBehaviour
         // }
         float brake = Mathf.Clamp(inputManager.brake,0,1)*brakeTorqueMax;
         foreach (WheelCollider wheel in backWheels)
-        { 
-            wheel.motorTorque = inputManager.vertical*torque*acceleration;
+        {
+            if (brake == 0) wheel.motorTorque = inputManager.vertical * torque * acceleration;
+            else wheel.motorTorque = 0;
             wheel.brakeTorque = brake;
         }
         

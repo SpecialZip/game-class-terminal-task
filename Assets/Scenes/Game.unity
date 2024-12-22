@@ -1489,7 +1489,7 @@ PrefabInstance:
       objectReference: {fileID: 1684475538}
     - target: {fileID: 119346314161541248, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: brakeTorqueMax
-      value: 1200
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 3010127394018237715, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_Size.y
