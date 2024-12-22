@@ -1821,6 +1821,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6426391205389776102, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 7318541993769744945, guid: 841f722cbda81534a9fb9b832f0e1722, type: 3}
       propertyPath: m_Name
       value: RabbitCar

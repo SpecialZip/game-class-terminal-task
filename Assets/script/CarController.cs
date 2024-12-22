@@ -127,7 +127,6 @@ public class CarController : MonoBehaviour
         { 
             wheel.motorTorque = inputManager.vertical*torque*acceleration;
             wheel.brakeTorque = brake;
-            Debug.Log(wheel.sidewaysFriction.extremumSlip);
         }
         
         foreach (WheelCollider wheel in frontWheels)
@@ -143,17 +142,8 @@ public class CarController : MonoBehaviour
 
         for (int i = 0; i < wheelMesh.Length; i++)
         {
-            wheelMesh[i].transform.localRotation = Quaternion.Euler(0, 90+steerAngle, 0);
+            wheelMesh[i].transform.localRotation = Quaternion.Euler(0, 90+steerAngle, 0);       
         }
-        // leftFrontWheel.localRotation = Quaternion.Slerp(leftFrontWheel.localRotation, Quaternion.Euler(0, leftWheelAngle, 0), Time.deltaTime * steerSpeed);
-        // rightFrontWheel.localRotation = Quaternion.Slerp(rightFrontWheel.localRotation, Quaternion.Euler(0, rightWheelAngle, 0), Time.deltaTime * steerSpeed);
-
-        // for(int i=0; i<frontWheels.Length; i++)
-        // {
-        //     frontWheels[i].GetWorldPose(out wheelPositions, out wheelRotation);
-        //     wheelMesh[i].transform.position = wheelPositions;
-        //     wheelMesh[i].transform.rotation = wheelRotation;
-        // }
     }
 
     
@@ -171,7 +161,6 @@ public class CarController : MonoBehaviour
         if (propSlot.Count < 2)
         {
             propSlot.Add(new Props("SpeedUp"));
-            Debug.Log("获得");
             uiManager.UpdateProps(propSlot);
         }
     }
@@ -182,7 +171,6 @@ public class CarController : MonoBehaviour
         if (propSlot.Count > 0)
         {
             propSlot.RemoveAt(0);
-            Debug.Log("消耗");
             uiManager.UpdateProps(propSlot);
             StartCoroutine(SpeedUpTimer());
         }

@@ -87,15 +87,14 @@ public class UIManager : MonoBehaviour
             
             //记录个人数据
             playerData.recordTime=recordTime;
+            Debug.Log(playerData.recordTime);
             //进入结算画面
             StartCoroutine(Ending());
         }
 
         yield return new WaitForSeconds(5f);
         
-        carPassing = false;
-
-        
+        carPassing = false;    
     }
     
     
@@ -152,7 +151,7 @@ public class UIManager : MonoBehaviour
     //进入End场景
     public IEnumerator Ending()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("End");
     }
 }
