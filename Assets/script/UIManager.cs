@@ -67,9 +67,9 @@ public class UIManager : MonoBehaviour
         carPassing = true;
         //更新一圈的时间
         lapTimeEnd = elapsedTime;
-        maxLapTime = Mathf.Min(maxLapTime, lapTimeEnd - lapTimeStart);
+        if (currentLap>0) maxLapTime = Mathf.Min(maxLapTime, lapTimeEnd - lapTimeStart);
         lapTimeStart = elapsedTime;
-        maxLapTimeText.text = FormatTime(maxLapTime);
+        maxLapTimeText.text = maxLapTime is Single.PositiveInfinity?FormatTime(0):FormatTime(maxLapTime);
 
         //更新圈数
         currentLap++;
@@ -87,7 +87,6 @@ public class UIManager : MonoBehaviour
             
             //记录个人数据
             playerData.recordTime=recordTime;
-            Debug.Log(playerData.recordTime);
             //进入结算画面
             StartCoroutine(Ending());
         }
