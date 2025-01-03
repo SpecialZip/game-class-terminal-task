@@ -479,8 +479,6 @@ MonoBehaviour:
   wheelMesh:
   - {fileID: 5920951825898283739}
   - {fileID: 2007010258524071474}
-  rb: {fileID: 0}
-  speedText: {fileID: 0}
   torque: 200
   brakeTorqueMax: 20000
   steeringMax: 40

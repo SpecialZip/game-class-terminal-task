@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI maxLapTimeText;  //最大圈速
     public TextMeshProUGUI lapsText;        //圈数
     public TextMeshProUGUI recordBestTimeText;//个人最佳成绩
+    public TextMeshProUGUI speedText;       //车速
     public Image[] props;                   //道具
     public GameObject speedUpUI;            //氮气加速UI图片
 
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("未能找到Text组件，请检查对象名称是否正确！");
         }
-
+        startPoint= GameObject.Find("StartPoint");
         startPointRay = new Ray(startPoint.transform.position, startPoint.transform.right);
         
     }
@@ -47,7 +48,8 @@ public class UIManager : MonoBehaviour
         // 格式化时间并更新Text显示内容
         string formattedTime = FormatTime(elapsedTime);
         timeText.text = formattedTime;
-        
+        //更新速度UI
+        speedText.text = Mathf.FloorToInt(CarController.getSpeed()).ToString();
         Debug.DrawRay(startPointRay.origin,startPointRay.direction,Color.red);
 
         if (!carPassing)

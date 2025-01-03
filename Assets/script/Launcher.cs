@@ -28,6 +28,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-10,0),1,0), Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("GameUI", Vector3.zero, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-10, 0), 1, 0), Quaternion.identity, 0);
     }
 }

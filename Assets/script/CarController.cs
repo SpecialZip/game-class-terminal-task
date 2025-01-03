@@ -14,8 +14,8 @@ public class CarController : MonoBehaviour
     public WheelCollider[] frontWheels;//前轮碰撞器
     public WheelCollider[] backWheels;//后轮碰撞器
     public GameObject[] wheelMesh = new GameObject[2];//轮子模型
-    public Rigidbody rb;
-    public TextMeshProUGUI speedText;       //车速
+    public static Rigidbody rb;
+    
     //速度模块
     public float torque = 200;
     public float brakeTorqueMax = 100;
@@ -44,17 +44,12 @@ public class CarController : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         audioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody>();
-        speedText = GameObject.Find("Canvas/Speed/Text (TMP)").GetComponent<TextMeshProUGUI>();
         uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //UI时速更新
-        float speed=rb.velocity.magnitude;
-        speedText.text = Mathf.FloorToInt(speed).ToString();
-        
         //音频播放
         if (inputManager.brake > 0)
         {
@@ -148,6 +143,11 @@ public class CarController : MonoBehaviour
         }
     }
 
+    //获取时速
+    public static float getSpeed()
+    {
+        return rb.velocity.magnitude;
+    }
     
     //控制加速时间
     private IEnumerator SpeedUpTimer()
