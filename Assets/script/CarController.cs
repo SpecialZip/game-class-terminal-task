@@ -44,6 +44,7 @@ public class CarController : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         audioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody>();
+        speedText = GameObject.Find("Canvas/Speed/Text (TMP)").GetComponent<TextMeshProUGUI>();
         uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
     }
 
