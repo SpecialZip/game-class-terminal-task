@@ -27288,6 +27288,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startUI: {fileID: 2021703601}
+  accountInputField: {fileID: 1443549075}
+  passwordInputField: {fileID: 18138362}
 --- !u!1 &1681964840
 GameObject:
   m_ObjectHideFlags: 0

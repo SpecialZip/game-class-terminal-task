@@ -9,6 +9,8 @@ public class Login : MonoBehaviour
 {
     public static bool isLogin = false;
     public GameObject startUI;
+    public TMP_InputField accountInputField;
+    public TMP_InputField passwordInputField;
     private void Awake()
     {
         startUI.SetActive(false);
@@ -42,6 +44,8 @@ public class Login : MonoBehaviour
         string account;
         string password;
         fetchInput(out account,out password);
+        
+        Debug.Log(password);
         //检查数据库里是否存在
         if (MySqlConnect.CheckAccountInDatabase(account, password))
         {
@@ -60,7 +64,9 @@ public class Login : MonoBehaviour
     
     private void fetchInput(out string account, out string password)
     {
-        account=transform.Find("Canvas/Input/InputAccount/Text Area/Text").GetComponent<TextMeshProUGUI>().text;
-        password=transform.Find("Canvas/Input/InputPassword/Text Area/Text").GetComponent<TextMeshProUGUI>().text;
+        //account=transform.Find("Canvas/Input/InputAccount/Text Area/Text").GetComponent<TextMeshProUGUI>().text;
+        //password=transform.Find("Canvas/Input/InputPassword/Text Area/Text").GetComponent<InputField>().text;
+        account=accountInputField.text;
+        password=passwordInputField.text;
     }
 }
