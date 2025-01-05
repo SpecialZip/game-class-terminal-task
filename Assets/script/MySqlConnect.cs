@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 public class MySqlConnect
 {
     private static MySqlConnection connection;
-    private static string server="127.0.0.1";
+    private static string server="192.168.50.30";
     private static string port="3306";
     private static string database="game_class";
     private static string password="yunzhcjust4fun";
