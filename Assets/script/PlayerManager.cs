@@ -26,6 +26,26 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         playerData.propNum = 0;
         playerData.rank = 0;
     }
+
+    public void addPropNum()
+    {
+        if(playerData.propNum < 2)
+            playerData.propNum++;
+    }
     
-    
+    public void minusPropNum()
+    {
+        if(playerData.propNum >0)
+            playerData.propNum--;
+    }
+
+    public void setRecordTime(float time)
+    {
+        playerData.recordTime = time;
+    }
+
+    public int getPropNum()
+    {
+        return playerData.propNum;
+    }
 }
