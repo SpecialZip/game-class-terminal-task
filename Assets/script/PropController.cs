@@ -25,7 +25,7 @@ public class PropController : MonoBehaviour
         Quaternion rotation = other.gameObject.transform.rotation;
         //Debug.Log(position);Debug.Log(rotation);
         GameObject.Find("Props").GetComponent<PropRespawn>().Respawn(position, rotation);
-        GameObject.Find("RabbitCar").GetComponent<CarController>().GetProp();
+        GameObject.Find("RabbitCar").GetComponent<CarController>().GetProp();//待修改
         //GameObject.Find("Kart").GetComponent<CarController>().GetProp();
         Destroy(gameObject);
     }

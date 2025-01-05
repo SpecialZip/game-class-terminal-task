@@ -903,6 +903,7 @@ GameObject:
   - component: {fileID: 8443618037489147772}
   - component: {fileID: 5985853555616761394}
   - component: {fileID: 5796113595397698337}
+  - component: {fileID: 8858800383142400956}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -1040,6 +1041,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8858800383142400956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5065078640850484110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81043cb52e591540932aca61e60ff63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCanvas: {fileID: 25570937775558895}
 --- !u!1 &5066663895120202250
 GameObject:
   m_ObjectHideFlags: 0

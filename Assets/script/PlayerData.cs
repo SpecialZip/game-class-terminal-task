@@ -6,4 +6,5 @@ public class PlayerData : ScriptableObject
     public int rank;
     public string name;
     public float recordTime;
+    public int propNum;//道具数量
 }
