@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class PropController : MonoBehaviour
+public class PropController : MonoBehaviourPunCallbacks
 {
     public Vector3 rotationSpeed = new Vector3(0, 1, 0); // 定义旋转速度
     // Start is called before the first frame update
@@ -25,8 +26,13 @@ public class PropController : MonoBehaviour
         Quaternion rotation = other.gameObject.transform.rotation;
         //Debug.Log(position);Debug.Log(rotation);
         GameObject.Find("Props").GetComponent<PropRespawn>().Respawn(position, rotation);
-        GameObject.Find("RabbitCar").GetComponent<CarController>().GetProp();//待修改
-        //GameObject.Find("Kart").GetComponent<CarController>().GetProp();
+        
+        GameObject playerObject = other.gameObject;
+        PhotonView photonView = playerObject.GetComponent<PhotonView>();
+        if (photonView!= null && photonView.IsMine)
+        {
+            playerObject.GetComponent<CarController>().GetProp();
+        }
         Destroy(gameObject);
     }
 }

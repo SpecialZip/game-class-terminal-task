@@ -17,9 +17,6 @@ public class MySqlConnect
 
     void Start()
     {
-        string connectionString = $"server={server};port={port};database={database};user={uid};password={password}";
-        connection=new MySqlConnection(connectionString);
-
         try
         {
             connection.Open();
@@ -44,6 +41,49 @@ public class MySqlConnect
                 object result = command.ExecuteScalar();
                 int count = result!=null? Convert.ToInt32(result) :0;
                 return count > 0;
+            }
+        }
+    }
+
+    public static bool CheckAccountExists(string account)
+    {
+        using (connection = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM players WHERE name = @account";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@account", account);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.LogError($"检查数据库错误: {ex.Message}");
+                return false;
+            }
+        }
+    }
+
+    public static bool Register(string account, string password)
+    {
+        using (connection = new MySqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+                string query = "INSERT INTO players (name, password) VALUES (@account, @password)";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@account", account);
+                command.Parameters.AddWithValue("@password", password);
+                int rowsAffected = Convert.ToInt32(command.ExecuteNonQuery());
+                return rowsAffected > 0;
+            }
+            catch (MySqlException ex)
+            {
+                Debug.LogError($"注册数据库错误: {ex.Message}");
+                return false;
             }
         }
     }

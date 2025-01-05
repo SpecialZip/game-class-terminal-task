@@ -33,6 +33,8 @@ public class CarController : MonoBehaviour
     }
     List<Props> propSlot = new List<Props>();
 
+    //玩家数据
+    private PlayerManager PM;
     private void Awake()
     {
         
@@ -44,7 +46,8 @@ public class CarController : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         audioSource = GetComponent<AudioSource>();
         rb=GetComponent<Rigidbody>();
-        uiManager=GameObject.Find("EventSystem").GetComponent<UIManager>();
+        uiManager=GameObject.Find("GameUI").GetComponent<UIManager>();
+        PM = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame

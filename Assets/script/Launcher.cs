@@ -22,13 +22,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         Debug.Log("OnConnectedToMaster");
-
         PhotonNetwork.JoinOrCreateRoom("room",new Photon.Realtime.RoomOptions() { MaxPlayers = 4 },default);
     }
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate("GameUI", Vector3.zero, Quaternion.identity, 0);
+        //PhotonNetwork.Instantiate("GameUI", Vector3.zero, Quaternion.identity, 0);
         PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-10, 0), 1, 0), Quaternion.identity, 0);
     }
 }
