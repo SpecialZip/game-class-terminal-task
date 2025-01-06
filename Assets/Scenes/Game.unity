@@ -299,6 +299,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5985853555616761394, guid: bbc10ee08f0d3974fbbc1c2a3dfd3232, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 62263826}
+    - target: {fileID: 5985853555616761394, guid: bbc10ee08f0d3974fbbc1c2a3dfd3232, type: 3}
       propertyPath: props.Array.data[0]
       value: 
       objectReference: {fileID: 273826930}
