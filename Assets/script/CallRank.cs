@@ -7,7 +7,7 @@ public class CallRank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Rank.Instance.ShowRank();
+        //Rank.Instance.ShowRank();
     }
 
     // Update is called once per frame

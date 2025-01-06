@@ -1,39 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Rank : MonoBehaviour
 {
-    private static Rank _instance;
-    public static Rank Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<Rank>();
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject();
-                    _instance = singletonObject.AddComponent<Rank>();
-                    singletonObject.name = typeof(Rank).ToString() + " (Singleton)";
-                }
-            }
-            return _instance;
-        }
-    }
+    
     public List<PlayerData> playerDataList=new List<PlayerData>();
     public GameObject[] groups;
     private void Awake()
     {
+       
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        AddPlayerData(PlayerDataMono.Instance.playerData);
     }
     
     
@@ -60,13 +46,35 @@ public class Rank : MonoBehaviour
             time.text = FormatTime(playerDataList[i].recordTime);
         }
     }
-
+    
+    public void SendScoreToOther(PlayerData playerData)
+    {
+        //object[] data = new object[] { playerData.name,playerData.recordTime };
+        //PhotonNetwork.RaiseEvent(1, data, new RaiseEventOptions { Receivers = ReceiverGroup.All}, SendOptions.SendReliable);
+        
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("AddPlayerDataNameScore", RpcTarget.All, playerData.name,playerData.recordTime);
+    }    
+    
+    [PunRPC]
     public void AddPlayerData(PlayerData playerData)
     {
         playerDataList.Add(playerData);
         SortGrades();
         ShowRank();
     }
+
+    [PunRPC]
+    public void AddPlayerDataNameScore(string name, float recordTime)
+    {
+        PlayerData playerData = ScriptableObject.CreateInstance<PlayerData>();
+        playerData.name = name;
+        playerData.recordTime = recordTime;
+        playerDataList.Add(playerData);
+        SortGrades();
+        ShowRank();
+    }
+    
     string FormatTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);

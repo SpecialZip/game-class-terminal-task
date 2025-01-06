@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,7 @@ public class UIManager : MonoBehaviour
     private float recordBestTime=Single.PositiveInfinity;           //个人记录
     private float elapsedTime;              //时间
     private int currentLap;                 //当前第几圈
-    private int totalLaps=2;                //一共几圈
+    private int totalLaps=1;                //一共几圈
     public GameObject startPoint;           //起点
     private Ray startPointRay;              //起点射线
     private bool carPassing = false;        //经过起点
@@ -153,7 +154,7 @@ public class UIManager : MonoBehaviour
     //进入End场景
     public IEnumerator Ending()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         SceneManager.LoadScene("End");
     }
 }

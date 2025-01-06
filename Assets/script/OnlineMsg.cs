@@ -35,6 +35,10 @@ public class OnlineMsg : MonoBehaviourPunCallbacks,IOnEventCallback
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
+            if (this.gameObject.GetComponent<PhotonView>() == null)
+            {
+                this.gameObject.AddComponent<PhotonView>();
+            }
         }
         else if (_instance != this)
         {
@@ -42,22 +46,13 @@ public class OnlineMsg : MonoBehaviourPunCallbacks,IOnEventCallback
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void SendScoreToAll(PlayerData playerData)
     {
-        object[] data = new object[] { playerData.name,playerData.recordTime };
-        PhotonNetwork.RaiseEvent(1, data, new RaiseEventOptions { Receivers = ReceiverGroup.All}, SendOptions.SendReliable);
+        //object[] data = new object[] { playerData.name,playerData.recordTime };
+        //PhotonNetwork.RaiseEvent(1, data, new RaiseEventOptions { Receivers = ReceiverGroup.All}, SendOptions.SendReliable);
+        
+        //PhotonView photonView = PhotonView.Get(this);
+        //photonView.RPC("AddPlayerDataNameScore", RpcTarget.All, playerData.name,playerData.recordTime);
     }
     public void OnEvent(EventData photonEvent)
     {
@@ -70,7 +65,7 @@ public class OnlineMsg : MonoBehaviourPunCallbacks,IOnEventCallback
             playerData.name = (string)data[0];
             playerData.recordTime = (float)data[1];
             
-            Rank.Instance.AddPlayerData(playerData);
+            //Rank.Instance.AddPlayerData(playerData);
         }
     }
 }
