@@ -56,6 +56,7 @@ public class Login : MonoBehaviour
             startUI.SetActive(true);
             gameObject.SetActive(false);
             PlayerPrefs.SetInt("isLogin", 1);
+            CreatePlayerDataObject(account);
         }
     }
 
@@ -68,7 +69,6 @@ public class Login : MonoBehaviour
         if (MySqlConnect.CheckAccountExists(account))
         {
             popHint("账号已存在");
-            Debug.Log("exist");
         }
         else
         {
@@ -82,7 +82,18 @@ public class Login : MonoBehaviour
             }
         }
     }
-    
+
+    //创建一个挂载数据的对象
+    public void CreatePlayerDataObject(string account)
+    {
+        // GameObject PlayerDataObject = new GameObject("PlayerDataObject");
+        // PlayerData data=ScriptableObject.CreateInstance<PlayerData>();
+        // data.name = account;
+        // PlayerDataObject.AddComponent<PlayerDataMono>().playerData = data;
+        // Instantiate(PlayerDataObject);
+        // DontDestroyOnLoad(PlayerDataObject);
+        PlayerDataMono.Instance.setName(account);
+    }
     private void fetchInput(out string account, out string password)
     {
         //account=transform.Find("Canvas/Input/InputAccount/Text Area/Text").GetComponent<TextMeshProUGUI>().text;

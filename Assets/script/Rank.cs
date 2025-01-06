@@ -7,51 +7,66 @@ using UnityEngine.UI;
 
 public class Rank : MonoBehaviour
 {
-    public List<PlayerData> playerDatas=new List<PlayerData>();
+    private static Rank _instance;
+    public static Rank Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Rank>();
+                if (_instance == null)
+                {
+                    GameObject singletonObject = new GameObject();
+                    _instance = singletonObject.AddComponent<Rank>();
+                    singletonObject.name = typeof(Rank).ToString() + " (Singleton)";
+                }
+            }
+            return _instance;
+        }
+    }
+    public List<PlayerData> playerDataList=new List<PlayerData>();
     public GameObject[] groups;
     private void Awake()
     {
-        playerDatas.AddRange(Resources.LoadAll<PlayerData>(""));
-        SortGrades();
-        ShowRank();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
+    
     public void SortGrades()
     {
-        playerDatas.Sort((a,b)=>a.recordTime.CompareTo(b.recordTime));
-        for (int i = 0; i < playerDatas.Count; i++)
+        playerDataList.Sort((a,b)=>a.recordTime.CompareTo(b.recordTime));
+        for (int i = 0; i < playerDataList.Count; i++)
         {
-            playerDatas[i].rank = i + 1;
+            playerDataList[i].rank = i + 1;
         }
     }
 
     public void ShowRank()
     {
-        for (int i = 0; i < playerDatas.Count; i++)
+        for (int i = 0; i < playerDataList.Count; i++)
         {
             TextMeshProUGUI rank = groups[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-            rank.text = playerDatas[i].rank.ToString();
+            rank.text = playerDataList[i].rank.ToString();
             
             TextMeshProUGUI name = groups[i].transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-            name.text = playerDatas[i].name;
+            name.text = playerDataList[i].name;
             
             TextMeshProUGUI time= groups[i].transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-            time.text = FormatTime(playerDatas[i].recordTime);
+            time.text = FormatTime(playerDataList[i].recordTime);
         }
     }
-    
+
+    public void AddPlayerData(PlayerData playerData)
+    {
+        playerDataList.Add(playerData);
+        SortGrades();
+        ShowRank();
+    }
     string FormatTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);

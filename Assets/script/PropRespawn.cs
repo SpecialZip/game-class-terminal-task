@@ -23,7 +23,6 @@ public class PropRespawn : MonoBehaviour
     public void Respawn(Vector3 position, Quaternion rotation)
     {
         StartCoroutine(WaitingRespawnTime(position, rotation));
-        
     }
 
 

@@ -11,7 +11,8 @@ public class End : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        recordTimeText.text = FormatTime(playerData.recordTime);
+        float recordTime=PlayerDataMono.Instance.playerData.recordTime;
+        recordTimeText.text = FormatTime(recordTime);
     }
 
     void Start()

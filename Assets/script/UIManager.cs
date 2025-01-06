@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public PlayerData playerData;           //存储数据
+    private PlayerData playerData;           //存储数据
     public TextMeshProUGUI timeText;        //进行时间
     public TextMeshProUGUI maxLapTimeText;  //最大圈速
     public TextMeshProUGUI lapsText;        //圈数
@@ -31,13 +31,12 @@ public class UIManager : MonoBehaviour
     private int propNum = 0;                //道具数量
     void Start()
     {
-        // 获取场景中的Text组件
-        if (timeText == null)
-        {
-            Debug.LogError("未能找到Text组件，请检查对象名称是否正确！");
-        }
         startPoint= GameObject.Find("StartPoint");
         startPointRay = new Ray(startPoint.transform.position, startPoint.transform.right);
+        Debug.Log("1111");
+        //playerData = GameObject.Find("PlayerDataObject").GetComponent<PlayerData>();
+        playerData = PlayerDataMono.Instance.playerData;
+        Debug.Log(playerData);
         
     }
 
@@ -91,6 +90,8 @@ public class UIManager : MonoBehaviour
             playerData.recordTime=recordTime;
             //进入结算画面
             StartCoroutine(Ending());
+            //广播自己的成绩
+            OnlineMsg.Instance.SendScoreToAll(playerData);
         }
 
         yield return new WaitForSeconds(5f);
