@@ -1645,7 +1645,7 @@ GameObject:
   - component: {fileID: 4427508745845731463}
   m_Layer: 0
   m_Name: RabbitCar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1660,8 +1660,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.5369616, y: 1.68, z: 5.5251412}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1104801928314570533}
   - {fileID: 534383103844075689}
@@ -1677,7 +1677,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7318541993769744945}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1715,8 +1715,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.3361197, y: 4.3350744, z: 9.510189}
-  m_Center: {x: 0.3910079, y: 0.49451065, z: -0.78201723}
+  m_Size: {x: 6.3361197, y: 3.2942302, z: 9.510189}
+  m_Center: {x: 0.39100805, y: 1.0149328, z: -0.7820173}
 --- !u!114 &119346314161541248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1738,8 +1738,6 @@ MonoBehaviour:
   wheelMesh:
   - {fileID: 2678786726057163863}
   - {fileID: 7844656161286617278}
-  rb: {fileID: 0}
-  speedText: {fileID: 0}
   torque: 200
   brakeTorqueMax: 100
   steeringMax: 40

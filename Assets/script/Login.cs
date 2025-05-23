@@ -50,14 +50,21 @@ public class Login : MonoBehaviour
         string password;
         fetchInput(out account,out password);
         //检查数据库里是否存在
-        if (MySqlConnect.CheckAccountInDatabase(account, password))
-        {
-            Debug.Log("登录成功");
-            startUI.SetActive(true);
-            gameObject.SetActive(false);
-            PlayerPrefs.SetInt("isLogin", 1);
-            CreatePlayerDataObject(account);
-        }
+        // if (MySqlConnect.CheckAccountInDatabase(account, password))
+        // {
+        //     Debug.Log("登录成功");
+        //     startUI.SetActive(true);
+        //     gameObject.SetActive(false);
+        //     PlayerPrefs.SetInt("isLogin", 1);
+        //     CreatePlayerDataObject(account);
+        // }
+        
+        //测试代码，跳过数据库验证
+        Debug.Log("登录成功");
+        startUI.SetActive(true);
+        gameObject.SetActive(false);
+        PlayerPrefs.SetInt("isLogin", 1);
+        CreatePlayerDataObject(account);
     }
 
     public void onRegister()

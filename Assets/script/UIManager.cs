@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
         string formattedTime = FormatTime(elapsedTime);
         timeText.text = formattedTime;
         //更新速度UI
-        speedText.text = Mathf.FloorToInt(CarController.getSpeed()).ToString();
+        //speedText.text = Mathf.FloorToInt(CarController.getSpeed()).ToString();
         Debug.DrawRay(startPointRay.origin,startPointRay.direction,Color.red);
 
         if (!carPassing)
