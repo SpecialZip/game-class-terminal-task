@@ -8,64 +8,39 @@ using ExitGames.Client.Photon;
 /// <summary>
 /// 网络消息传输处理，单例模式，处理排行榜数据。
 /// </summary>
-public class OnlineMsg : MonoBehaviourPunCallbacks,IOnEventCallback
+public class OnlineMsg : MonoBehaviourPun
 {
-    private static OnlineMsg _instance;
-    public static OnlineMsg Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<OnlineMsg>();
-                if (_instance == null)
-                {
-                    GameObject singletonObject = new GameObject();
-                    _instance = singletonObject.AddComponent<OnlineMsg>();
-                    singletonObject.name = typeof(OnlineMsg).ToString() + " (Singleton)";
-                }
-            }
-            return _instance;
-        }
-    }
+    public static OnlineMsg Instance { get; private set; }
+    public List<PlayerDataManager.PlayerData> leaderboardData { get; private set; } = new List<PlayerDataManager.PlayerData>();//排行榜数据
 
     private void Awake()
     {
-        if (_instance == null)
+        if (Instance == null)
         {
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            if (this.gameObject.GetComponent<PhotonView>() == null)
-            {
-                this.gameObject.AddComponent<PhotonView>();
-            }
+            Instance = this;
+            DontDestroyOnLoad(this);
         }
-        else if (_instance != this)
+        else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
-    public void SendScoreToAll(PlayerData playerData)
+    public void SendScoreToAll(PlayerDataManager.PlayerData playerData)
     {
-        //object[] data = new object[] { playerData.name,playerData.recordTime };
-        //PhotonNetwork.RaiseEvent(1, data, new RaiseEventOptions { Receivers = ReceiverGroup.All}, SendOptions.SendReliable);
-        
-        //PhotonView photonView = PhotonView.Get(this);
-        //photonView.RPC("AddPlayerDataNameScore", RpcTarget.All, playerData.name,playerData.recordTime);
+        photonView.RPC("ReceiveScore", RpcTarget.All, playerData);
     }
-    public void OnEvent(EventData photonEvent)
+    
+    //客户端接受数据
+    [PunRPC]
+    public void ReceiveScore(PlayerDataManager.PlayerData playerData)
     {
-        if (photonEvent.Code == 1)
-        {
-            // 假设服务器将玩家数据作为事件数据发送回来
-            object[] data = (object[])photonEvent.CustomData;
-            Debug.Log((string)data[0]);
-            PlayerData playerData = ScriptableObject.CreateInstance<PlayerData>();
-            playerData.name = (string)data[0];
-            playerData.recordTime = (float)data[1];
-            
-            //Rank.Instance.AddPlayerData(playerData);
-        }
+        leaderboardData.Add(playerData);
+    }
+    
+    //单机准备
+    public void AddPlayerData(PlayerDataManager.PlayerData playerData)
+    {
+        leaderboardData.Add(playerData);
     }
 }

@@ -24,7 +24,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        if (PlayerPrefs.GetString("GameMode") == "Network")
+        if (PlayerPrefs.GetString("GameMode", "Local") == "Network")
         {
             base.OnConnectedToMaster();
             Debug.Log("OnConnectedToMaster");

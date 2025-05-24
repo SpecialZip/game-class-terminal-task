@@ -6,130 +6,50 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using static FormatTimeNamespace.FormatTimer;
 public class UIManager : MonoBehaviour
 {
-    private PlayerData playerData;           //存储数据
     public TextMeshProUGUI timeText;        //进行时间
     public TextMeshProUGUI maxLapTimeText;  //最大圈速
     public TextMeshProUGUI lapsText;        //圈数
     public TextMeshProUGUI recordBestTimeText;//个人最佳成绩
     public TextMeshProUGUI speedText;       //车速
-    public Image[] props;                   //道具
-    public GameObject speedUpUI;            //氮气加速UI图片
+    private int totalLaps;               //总圈数
 
-    private float maxLapTime=Single.PositiveInfinity;               //最大圈速
-    private float lapTimeStart;             //圈速记录开始
-    private float lapTimeEnd;               //圈速记录结束
-    private float recordTime;               //本次记录
-    private float recordBestTime=Single.PositiveInfinity;           //个人记录
-    private float elapsedTime;              //时间
-    private int currentLap;                 //当前第几圈
-    private int totalLaps=1;                //一共几圈
-    public GameObject startPoint;           //起点
-    private Ray startPointRay;              //起点射线
-    private bool carPassing = false;        //经过起点
-    private int propNum = 0;                //道具数量
-    void Start()
+    private void Start()
     {
-        startPoint= GameObject.Find("StartPoint");
-        startPointRay = new Ray(startPoint.transform.position, startPoint.transform.right);
-        Debug.Log("1111");
-        //playerData = GameObject.Find("PlayerDataObject").GetComponent<PlayerData>();
-        playerData = PlayerDataMono.Instance.playerData;
-        Debug.Log(playerData);
-        
+        LapCounter.Instance.OnLapCountChanged += UpdateLapUI;
+        totalLaps=LapCounter.Instance.GetTotalLaps();
     }
 
-    void Update()
-    {
-        // 游戏运行时，时间不断累加
-        if(currentLap>0 && currentLap<=totalLaps) elapsedTime += Time.deltaTime;
-        // 格式化时间并更新Text显示内容
-        string formattedTime = FormatTime(elapsedTime);
-        timeText.text = formattedTime;
-        //更新速度UI
-        //speedText.text = Mathf.FloorToInt(CarController.getSpeed()).ToString();
-        Debug.DrawRay(startPointRay.origin,startPointRay.direction,Color.red);
 
-        if (!carPassing)
-        {
-            RaycastHit hit;
-            float rayLength = 10f;
-            if (Physics.Raycast(startPointRay, out hit, rayLength))
-            {
-                StartCoroutine(UpdateLaps());
-            }
-        }
-    }
-
-    //更新圈数
-    IEnumerator UpdateLaps()
+    private void UpdateLapUI(object sender, EventArgs e)
     {
-        carPassing = true;
-        //更新一圈的时间
-        lapTimeEnd = elapsedTime;
-        if (currentLap>0) maxLapTime = Mathf.Min(maxLapTime, lapTimeEnd - lapTimeStart);
-        lapTimeStart = elapsedTime;
+        // 更新最大圈速UI
+        float maxLapTime = LapCounter.Instance.GetMaxLapTime();
         maxLapTimeText.text = maxLapTime is Single.PositiveInfinity?FormatTime(0):FormatTime(maxLapTime);
 
-        //更新圈数
-        currentLap++;
+        // 更新圈数UI
+        int currentLap = LapCounter.Instance.GetCurrentLap();
         lapsText.text = FormatLaps(currentLap, totalLaps);
-        
-        //结束
-        if (currentLap == totalLaps+1)
-        {
-            recordTime = elapsedTime;
-            if (recordBestTime > recordTime)
-            {
-                recordBestTime=recordTime;
-                recordBestTimeText.text = FormatTime(recordBestTime);
-            }
-            
-            //记录个人数据
-            playerData.recordTime=recordTime;
-            //进入结算画面
-            StartCoroutine(Ending());
-            //广播自己的成绩
-            OnlineMsg.Instance.SendScoreToAll(playerData);
-        }
 
-        yield return new WaitForSeconds(5f);
-        
-        carPassing = false;    
+        // 更新个人最佳成绩UI
+        float recordBestTime = LapCounter.Instance.GetRecordBestTime();
+        if (recordBestTime == Single.PositiveInfinity)
+        {
+            recordBestTime = 0;
+        }
+        recordBestTimeText.text = FormatTime(recordBestTime);
+
     }
-    
-    
-    //更新道具栏UI
-    public void UpdateProps(List<CarController.Props> propSlot)
+
+    private void Update()
     {
-        int propRealNum = propSlot.Count;
-        
-        
-        if (propRealNum== 0)
-        {
-            GameObject firstProp = props[0].transform.Find("SpeedUp(Clone)").gameObject;
-            Destroy(firstProp);
-        }
-        else if (propSlot.Count == 1)
-        {
-            if (propNum < propRealNum)
-            {
-                Instantiate(speedUpUI, props[0].transform);
-            }
-            else
-            {
-                GameObject secondProp = props[1].transform.Find("SpeedUp(Clone)").gameObject;
-                Destroy(secondProp);
-            }
-        }
-        else if(propSlot.Count == 2)
-        {
-            Instantiate(speedUpUI, props[1].transform);
-        }
-        propNum = propRealNum;
+        // 更新速度UI
+        string formattedTime = FormatTime(GameManager.Instance.GetElapsedTime());
+        timeText.text = formattedTime;
     }
+
 
     public string FormatTime(float timeInSeconds)
     {
@@ -151,10 +71,5 @@ public class UIManager : MonoBehaviour
         return string.Format("{0}/{1}", currentLap,totalLaps);
     }
 
-    //进入End场景
-    public IEnumerator Ending()
-    {
-        yield return new WaitForSeconds(10f);
-        SceneManager.LoadScene("End");
-    }
+    
 }

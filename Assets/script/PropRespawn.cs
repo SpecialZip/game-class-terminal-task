@@ -8,17 +8,7 @@ public class PropRespawn : MonoBehaviour
 { 
     public GameObject propPrefab; // 道具预制体
     private const float respawnTime = 10f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Respawn(Vector3 position, Quaternion rotation)
     {

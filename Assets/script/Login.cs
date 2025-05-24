@@ -36,12 +36,6 @@ public class Login : MonoBehaviour
         transform.Find("Canvas/Register/Text (TMP)").GetComponent<Button>().onClick.AddListener(onRegister);
         hint.SetActive(false);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public void onLogin()
     {
@@ -99,7 +93,7 @@ public class Login : MonoBehaviour
         // PlayerDataObject.AddComponent<PlayerDataMono>().playerData = data;
         // Instantiate(PlayerDataObject);
         // DontDestroyOnLoad(PlayerDataObject);
-        PlayerDataMono.Instance.setName(account);
+        PlayerDataManager.Instance.localPlayerData.name=account;
     }
     private void fetchInput(out string account, out string password)
     {

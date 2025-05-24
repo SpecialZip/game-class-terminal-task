@@ -53,19 +53,7 @@ public class SceneLoader : MonoBehaviour
     {
         // 网络联机游戏
         PlayerPrefs.SetString("GameMode", "Network");
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.LoadLevel("Game");
-        }
-        else
-        {
-            Debug.LogError("Photon is not connected. Please ensure you are connected to the Photon server.");
-        }
-    }
-    
-    public void startGame()
-    {
-        SceneManager.LoadScene("Game");
+        PhotonNetwork.LoadLevel("Game");
     }
 
     public void toStart(){

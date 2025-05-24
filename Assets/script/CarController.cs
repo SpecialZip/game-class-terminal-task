@@ -21,6 +21,18 @@ public class CarController : MonoBehaviour
     public float brakeTorqueMax = 100;
     public float steeringMax = 40;
     public bool speedUpStatus = false;//加速状态。
+
+    //汽车状态
+    private enum CarState
+    {
+        Idle,//静止 
+        MovingForward,//前进 
+        MovingBackward, //后退
+        Braking, //刹车
+        SpeedingUp//加速
+    }
+    private CarState currentState = CarState.Idle;
+    
     //道具模块
     public struct Props
     {
@@ -31,16 +43,10 @@ public class CarController : MonoBehaviour
             use = value;
         }
     }
-    List<Props> propSlot = new List<Props>();
 
     //玩家数据
     private PlayerManager PM;
-    private void Awake()
-    {
-        
-    }
 
-    // Start is called before the first frame update
     void Start()
     {
         inputManager = GetComponent<InputManager>();
@@ -68,17 +74,43 @@ public class CarController : MonoBehaviour
                 audioSource.Stop();
             }
         }
+        UpdateState();
     }
 
+    //状态更新
+    private void UpdateState()
+    {
+        if (inputManager.brake > 0)
+        {
+            currentState = CarState.Braking;
+        }
+        else if (speedUpStatus)
+        {
+            currentState = CarState.SpeedingUp;
+        }
+        else if (inputManager.vertical > 0)
+        {
+            currentState = CarState.MovingForward;
+        }
+        else if (inputManager.vertical < 0)
+        {
+            currentState = CarState.MovingBackward;
+        }
+        else
+        {
+            currentState = CarState.Idle;
+        }
+    }
 
     private void FixedUpdate()
     {
         animateWheels();
-        if (inputManager.prop > 0 && !speedUpStatus&& propSlot.Count > 0)
+        if (inputManager.prop > 0 && !speedUpStatus&& PropManager.Instance.GetPropNum() > 0)
         {
             //加速状态
             speedUpStatus = true;
-            ConsumeProp();
+            PropManager.Instance.ConsumeProp();
+            StartCoroutine(SpeedUpTimer());
         }
         if (speedUpStatus)
         {
@@ -147,7 +179,7 @@ public class CarController : MonoBehaviour
     }
 
     //获取时速
-    public static float getSpeed()
+    public static float GetSpeed()
     {
         return rb.velocity.magnitude;
     }
@@ -155,29 +187,10 @@ public class CarController : MonoBehaviour
     //控制加速时间
     private IEnumerator SpeedUpTimer()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(3f);
         speedUpStatus = false;
     }
     
     
-    //获得道具
-    public void GetProp()
-    {
-        if (propSlot.Count < 2)
-        {
-            propSlot.Add(new Props("SpeedUp"));
-            uiManager.UpdateProps(propSlot);
-        }
-    }
-    
-    //消耗道具
-    public void ConsumeProp()
-    {
-        if (propSlot.Count > 0)
-        {
-            propSlot.RemoveAt(0);
-            uiManager.UpdateProps(propSlot);
-            StartCoroutine(SpeedUpTimer());
-        }
-    }
+ 
 }
