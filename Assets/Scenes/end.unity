@@ -18230,7 +18230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6fc111bfc0efb44b8ea2433fa4e26aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: ec32d611b1df9f44d9079be82980f2a1, type: 2}
   recordTimeText: {fileID: 855699944}
 --- !u!1 &1207059761
 GameObject:
