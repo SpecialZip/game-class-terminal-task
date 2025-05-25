@@ -28,6 +28,7 @@ public class LapCounter : MonoBehaviour
         }
     }
     
+    private bool isNetworkGame = false; //是否是网络游戏
     private float maxLapTime=Single.PositiveInfinity;               //最大圈速
     private float lapTimeStart;             //圈速记录开始
     private float lapTimeEnd;               //圈速记录结束
@@ -50,6 +51,7 @@ public class LapCounter : MonoBehaviour
     private void Start()
     {
         startPointRay = new Ray(startPoint.transform.position, startPoint.transform.right);
+        isNetworkGame = PlayerPrefs.GetString("GameMode", "Local") == "Network";
         //playerData = GameObject.Find("PlayerDataObject").GetComponent<PlayerData>();
     }
 
@@ -57,15 +59,36 @@ public class LapCounter : MonoBehaviour
     {
         Debug.DrawRay(startPointRay.origin,startPointRay.direction,Color.red);
 
-        if (!carPassing)
+        if (isNetworkGame)
         {
-            RaycastHit hit;
-            float rayLength = 10f;
-            if (Physics.Raycast(startPointRay, out hit, rayLength))
+            if (!carPassing)
             {
-                StartCoroutine(UpdateLaps());
+                RaycastHit hit;
+                float rayLength = 10f;
+                if (Physics.Raycast(startPointRay, out hit, rayLength))
+                {
+                    Debug.Log("碰到的物体是："+hit.transform.name);
+                    PhotonView photonView = hit.collider.GetComponent<PhotonView>();
+                    if (photonView != null && photonView.IsMine)
+                    {
+                        StartCoroutine(UpdateLaps());
+                    }
+                }
             }
         }
+        else
+        {
+            if (!carPassing)
+            {
+                RaycastHit hit;
+                float rayLength = 10f;
+                if (Physics.Raycast(startPointRay, out hit, rayLength))
+                {
+                    StartCoroutine(UpdateLaps());
+                }
+            }
+        }
+        
     }
 
     //更新圈数
@@ -100,13 +123,10 @@ public class LapCounter : MonoBehaviour
             {
                 //广播结束
                 GameManager.Instance.photonView.RPC("PlayerReachedFinishLine", RpcTarget.All);
-                //广播自己的成绩
-                OnlineMsg.Instance.SendScoreToAll(PlayerDataManager.Instance.localPlayerData);
             }
             else
             {
                 GameManager.Instance.PlayerReachedFinishLine();
-                OnlineMsg.Instance.AddPlayerData(PlayerDataManager.Instance.localPlayerData);
             }
             
             //进入结算画面

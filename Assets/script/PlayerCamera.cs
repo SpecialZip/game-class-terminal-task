@@ -8,12 +8,12 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviourPunCallbacks
 {
     public Camera playerCamera;
-    private AudioSource audioListener;
+    private AudioListener audioListener;
     // Start is called before the first frame update
     void Start()
     {
         
-        audioListener = GetComponent<AudioSource>();
+        audioListener = playerCamera.GetComponent<AudioListener>();
         if (photonView.IsMine)
         {
             playerCamera.enabled = true;
@@ -25,11 +25,5 @@ public class PlayerCamera : MonoBehaviourPunCallbacks
             audioListener.enabled = false;
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

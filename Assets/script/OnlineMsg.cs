@@ -11,6 +11,7 @@ using ExitGames.Client.Photon;
 public class OnlineMsg : MonoBehaviourPun
 {
     public static OnlineMsg Instance { get; private set; }
+    private PhotonView photonView;
     public List<PlayerDataManager.PlayerData> leaderboardData { get; private set; } = new List<PlayerDataManager.PlayerData>();//排行榜数据
 
     private void Awake()
@@ -24,18 +25,33 @@ public class OnlineMsg : MonoBehaviourPun
         {
             Destroy(gameObject);
         }
+        
+        photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+        {
+            Debug.LogError("PhotonView component missing on OnlineMsg GameObject!");
+        }
     }
 
     public void SendScoreToAll(PlayerDataManager.PlayerData playerData)
     {
-        photonView.RPC("ReceiveScore", RpcTarget.All, playerData);
+        photonView.RPC("ReceiveScore", RpcTarget.All,  playerData.rank,playerData.name, playerData.recordTime, playerData.isTrackCompleted);
     }
     
     //客户端接受数据
     [PunRPC]
-    public void ReceiveScore(PlayerDataManager.PlayerData playerData)
+    public void ReceiveScore(int rank,string name, float recordTime, bool isTrackCompleted)
     {
+        PlayerDataManager.PlayerData playerData = new PlayerDataManager.PlayerData
+        {
+            rank = rank,
+            name = name,
+            recordTime = recordTime,
+            isTrackCompleted = isTrackCompleted
+        };
+        
         leaderboardData.Add(playerData);
+        Debug.Log(playerData);
     }
     
     //单机准备

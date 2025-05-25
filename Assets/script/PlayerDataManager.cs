@@ -6,9 +6,8 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data")]
 [Serializable]
-public class PlayerDataManager :MonoBehaviourPunCallbacks
+public class PlayerDataManager :MonoBehaviour
 {
-    
     public static PlayerDataManager Instance;
     void Awake()
     {
@@ -16,12 +15,12 @@ public class PlayerDataManager :MonoBehaviourPunCallbacks
         DontDestroyOnLoad(gameObject);
     }
 
+    [Serializable]
     public class PlayerData
     {
         public int rank;
         public string name;
         public float recordTime;
-        public int propNum;//道具数量
         public bool isTrackCompleted;
     }
     

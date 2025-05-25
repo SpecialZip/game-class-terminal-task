@@ -25,7 +25,7 @@ public class SingleRankUI : MonoBehaviour
         }
         else
         {
-            timeText.text = "未完成";
+            timeText.text = "Incomplete";
         }
     }
 }

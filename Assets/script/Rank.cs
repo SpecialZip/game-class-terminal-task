@@ -22,7 +22,15 @@ public class Rank : MonoBehaviour
     
     public void SortGrades()
     {
-        leaderboardData.Sort((a,b)=>a.recordTime.CompareTo(b.recordTime));
+        //leaderboardData.Sort((a,b)=>a.recordTime.CompareTo(b.recordTime));
+        leaderboardData.Sort((a, b) =>
+        {
+            if (a.isTrackCompleted == b.isTrackCompleted)
+            {
+                return a.recordTime.CompareTo(b.recordTime);
+            }
+            return a.isTrackCompleted ? -1 : 1;
+        });
         for (int i = 0; i < leaderboardData.Count; i++)
         {
             leaderboardData[i].rank = i + 1;

@@ -11,7 +11,23 @@ public class End : MonoBehaviour
 
     void Start()
     {
-        recordTimeText.text = FormatTime(PlayerDataManager.Instance.localPlayerData.recordTime);
+        float recordTime = PlayerDataManager.Instance.localPlayerData.recordTime;
+        if(recordTime == 0)
+        {
+            recordTimeText.text = "Incomplete";
+        }
+        else
+        {
+            recordTimeText.text = FormatTime(recordTime);
+        }
+        if(PlayerPrefs.GetString("GameMode", "Local") == "Network")
+        {       
+            OnlineMsg.Instance.SendScoreToAll(PlayerDataManager.Instance.localPlayerData);
+        }
+        else
+        {
+            OnlineMsg.Instance.AddPlayerData(PlayerDataManager.Instance.localPlayerData);
+        }
     }
 
 }
